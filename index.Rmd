@@ -1,0 +1,37 @@
+---
+title: "Scraping some data"
+output: html_notebook
+---
+
+Code to download the tables available in the Wikipedia page:
+
+```{r}
+# already installed (using rstudio interface)
+
+library(XML)
+library(RCurl)
+
+# URL
+wikiLink="https://en.wikipedia.org/wiki/International_Innovation_Index"
+
+# Data
+wikiLinkContents = getURL(wikiLink)
+wikiTables = readHTMLTable(wikiLinkContents,header = T,
+                           stringsAsFactors=FALSE)
+```
+
+Let me choose one table:
+
+```{r}
+IIindex=wikiTables[[3]] # the third one
+
+str(IIindex) # check contents and type
+```
+Saving the table selected:
+
+```{r}
+write.csv(IIindex,file.path("dataFiles","IIindex.csv"),row.names = F)
+```
+
+
+
